@@ -8,6 +8,8 @@ onready var start_timer := $StartTimer
 onready var start_position := $StartPosition
 onready var mob_spawn_location := $MobPath/MobSpwanLocation
 onready var hud := $HUD
+onready var bgm := $BGM
+onready var death_sound := $DeathSound
 
 
 export var mob_scene: PackedScene
@@ -18,7 +20,6 @@ var score: int
 
 func _ready():
 	randomize()
-	new_game()
 
 
 func new_game():
@@ -28,12 +29,16 @@ func new_game():
 	hud.update_score(score)
 	hud.show_message("Get Ready")
 	get_tree().call_group("mobs", "queue_free")
+	bgm.play()
 
 
 func _on_Player_hit() -> void:
+	# gameover
 	score_timer.stop()
 	mob_timer.stop()
 	hud.show_game_over()
+	bgm.stop()
+	death_sound.play()
 
 
 func _on_ScoreTimer_timeout() -> void:
