@@ -1,4 +1,5 @@
 extends RigidBody2D
+class_name Mob
 
 onready var anim_sprite := $AnimatedSprite
 onready var collision_shape := $CollisionShape2D
